@@ -133,14 +133,12 @@ document.addEventListener('DOMContentLoaded', () => {
       tr.dataset.member = mi;
 
       const dayCells = weekDates.map(date => {
-        const report = allReports[date]?.[mi] || { content: '', done: false };
+        const report = allReports[date]?.[mi] || { content: '' };
         const [y, m, d] = date.split('-').map(Number);
         const dow = new Date(y, m - 1, d).getDay();
         const isToday   = date === today;
         const isWeekend = dow === 0 || dow === 6;
-        const isDone    = report.done;
         const cls = [
-          isDone    ? 'is-done'      : '',
           isToday   ? 'today-cell'   : '',
           isWeekend ? 'weekend-cell' : '',
         ].filter(Boolean).join(' ');
@@ -149,12 +147,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <td class="cell-day ${cls}" data-date="${date}" data-member="${mi}">
             <div class="day-wrap">
               <textarea class="day-content" placeholder="업무...">${report.content}</textarea>
-              <div class="day-footer">
-                <label class="done-toggle">
-                  <input type="checkbox" class="day-done" ${isDone ? 'checked' : ''}>
-                  <span class="done-text ${isDone ? 'is-done' : ''}">${isDone ? '완료' : '미작성'}</span>
-                </label>
-              </div>
             </div>
           </td>`;
       }).join('');
@@ -178,10 +170,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── 이벤트 연결 ───────────────────────────────────────
 
   function attachEvents() {
-    // 텍스트영역 자동 높이
-    document.querySelectorAll('.day-content').forEach(ta => {
-      autoResize(ta);
-      ta.addEventListener('input', () => autoResize(ta));
+    // 텍스트영역 자동 높이 — 레이아웃 완료 후 측정
+    requestAnimationFrame(() => {
+      document.querySelectorAll('.day-content').forEach(ta => {
+        autoResize(ta);
+        ta.addEventListener('input', () => autoResize(ta));
+      });
     });
 
     // 이름 편집
@@ -197,35 +191,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Enter') { e.preventDefault(); el.blur(); }
       });
     });
-
-    // 완료 체크박스 (변경 시 즉시 저장)
-    document.querySelectorAll('.cell-day').forEach(cell => {
-      const checkbox = cell.querySelector('.day-done');
-      checkbox.addEventListener('change', () => {
-        const date = cell.dataset.date;
-        const mi   = Number(cell.dataset.member);
-        const done = checkbox.checked;
-        const doneText = cell.querySelector('.done-text');
-
-        // 시각 업데이트
-        cell.classList.toggle('is-done', done);
-        doneText.className = 'done-text' + (done ? ' is-done' : '');
-        doneText.textContent = done ? '완료' : '미작성';
-
-        // 즉시 저장
-        if (!allReports[date]) allReports[date] = {};
-        allReports[date][mi] = {
-          ...(allReports[date][mi] || {}),
-          content: cell.querySelector('.day-content').value,
-          done,
-        };
-        saveReports(date, allReports[date]);
-
-        updateDoneCount();
-      });
-    });
-
-    updateDoneCount();
   }
 
   // ── 전체 저장 ─────────────────────────────────────────
@@ -238,7 +203,6 @@ document.addEventListener('DOMContentLoaded', () => {
         reports[mi] = {
           ...(allReports[date]?.[mi] || {}),
           content: cell.querySelector('.day-content').value,
-          done:    cell.querySelector('.day-done').checked,
         };
       });
       allReports[date] = reports;
