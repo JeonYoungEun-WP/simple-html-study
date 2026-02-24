@@ -4,27 +4,46 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>일일 업무보고</title>
-  <link href='/style.css' rel='stylesheet'>
+  <link href='style.css' rel='stylesheet'>
 </head>
 <body>
   <div id="app">
-    <header>
-      <h1>일일 업무보고</h1>
-      <div class="date-bar">
-        <button id="prev-date" class="nav-btn">&#8249;</button>
-        <input type="date" id="report-date" />
-        <button id="next-date" class="nav-btn">&#8250;</button>
+
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <span class="page-icon">📋</span>
+        <h1 class="page-title">일일 업무보고</h1>
       </div>
-    </header>
+      <div class="toolbar-center">
+        <button id="prev-week" class="nav-btn">&#8249;</button>
+        <span id="week-label" class="week-label"></span>
+        <button id="next-week" class="nav-btn">&#8250;</button>
+      </div>
+      <div class="toolbar-right">
+        <button class="tool-btn" id="print-btn">🖨 인쇄</button>
+        <button class="btn-primary" id="save-all-btn">전체 저장</button>
+      </div>
+    </div>
+
+    <div class="view-bar">
+      <div class="view-tabs">
+        <button class="view-tab active">&#9783; 표</button>
+      </div>
+    </div>
+
     <main>
-      <div id="members-grid"></div>
-      <div class="footer-actions">
-        <button id="save-all-btn">전체 저장</button>
-        <button id="print-btn">인쇄</button>
+      <div class="table-wrapper">
+        <table class="report-table">
+          <thead>
+            <tr id="week-header"></tr>
+          </thead>
+          <tbody id="report-tbody"></tbody>
+        </table>
       </div>
     </main>
+
   </div>
   <div id="toast"></div>
-  <script defer type="module" src="/main.js"></script>
+  <script defer src="main.js"></script>
 </body>
 </html>
