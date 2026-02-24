@@ -1,1 +1,311 @@
-/* Add styles here */
+:root {
+  --background-color: #f0f2f5;
+  --text-color: #333;
+  --card-background: #ffffff;
+  --border-color: #e0e0e0;
+  --shadow-color: rgba(0, 0, 0, 0.08);
+  --header-bg: #1e2a3a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ── Header ── */
+header {
+  background-color: var(--header-bg);
+  color: white;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.date-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.date-bar input[type="date"] {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 6px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.date-bar input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.nav-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.nav-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ── Main Grid ── */
+main {
+  padding: 1.5rem;
+  flex: 1;
+}
+
+#members-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+@media (max-width: 1024px) {
+  #members-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  #members-grid {
+    grid-template-columns: 1fr;
+  }
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* ── Member Card ── */
+.member-card {
+  background: var(--card-background);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px var(--shadow-color);
+  border-top: 4px solid var(--accent);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  transition: box-shadow 0.2s;
+}
+
+.member-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+.member-card.done {
+  background: #f9fffe;
+  border-top-color: var(--accent);
+  opacity: 0.85;
+}
+
+/* ── Card Header ── */
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.member-name-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.member-index {
+  background: var(--accent);
+  color: white;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.member-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #222;
+  outline: none;
+  border-bottom: 1px dashed transparent;
+  transition: border-color 0.2s;
+  cursor: text;
+  min-width: 20px;
+}
+
+.member-name:focus {
+  border-bottom-color: var(--accent);
+}
+
+/* ── Done Toggle ── */
+.done-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.done-check {
+  accent-color: var(--accent);
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.done-text {
+  color: #888;
+}
+
+.member-card.done .done-text {
+  color: #27ae60;
+}
+
+/* ── Textarea ── */
+.member-content {
+  width: 100%;
+  min-height: 130px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  resize: vertical;
+  transition: border-color 0.2s;
+  background: #fafafa;
+}
+
+.member-content:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: #fff;
+}
+
+/* ── Card Footer ── */
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.save-btn {
+  padding: 0.4rem 1rem;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.save-btn:hover {
+  opacity: 0.85;
+}
+
+/* ── Footer Actions ── */
+.footer-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.footer-actions button {
+  padding: 0.7rem 2rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+#save-all-btn {
+  background: #1e2a3a;
+  color: white;
+}
+
+#print-btn {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.footer-actions button:hover {
+  opacity: 0.85;
+}
+
+/* ── Toast ── */
+#toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #333;
+  color: white;
+  padding: 0.65rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+  z-index: 999;
+}
+
+#toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ── Print ── */
+@media print {
+  header { background: #1e2a3a !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .footer-actions, .save-btn, .nav-btn { display: none; }
+  body { background: white; }
+  #members-grid { grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  .member-card { box-shadow: none; border: 1px solid #ddd; page-break-inside: avoid; }
+}

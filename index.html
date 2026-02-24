@@ -1,14 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
+  <title>일일 업무보고</title>
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+  <div id="app">
+    <header>
+      <h1>일일 업무보고</h1>
+      <div class="date-bar">
+        <button id="prev-date" class="nav-btn">&#8249;</button>
+        <input type="date" id="report-date" />
+        <button id="next-date" class="nav-btn">&#8250;</button>
+      </div>
+    </header>
+    <main>
+      <div id="members-grid"></div>
+      <div class="footer-actions">
+        <button id="save-all-btn">전체 저장</button>
+        <button id="print-btn">인쇄</button>
+      </div>
+    </main>
+  </div>
+  <div id="toast"></div>
+  <script defer type="module" src="/main.js"></script>
 </body>
 </html>
